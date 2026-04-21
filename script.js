@@ -2,15 +2,15 @@ const statusEl = document.querySelector("#checkoutStatus");
 const checkoutButtons = document.querySelectorAll("[data-checkout]");
 
 const checkoutLabels = {
-  wordpress: "WordPress Breakout",
-  academy: "Independent Academy",
+  serviceDeposit: "project deposit",
+  serviceFinal: "final project payment",
   audit: "Security & Logic Audit",
 };
 
 const paymentLinks = {
-  wordpress: "https://buy.stripe.com/4gM3cu0u37HTd2l9WU8EM00",
-  academy: "https://buy.stripe.com/4gM3cu0u37HTd2l9WU8EM00",
-  audit: "https://buy.stripe.com/4gM3cu0u37HTd2l9WU8EM00",
+  serviceDeposit: "https://buy.stripe.com/7sY00i7Wv0fr2nH7OM8EM02",
+  serviceFinal: "https://buy.stripe.com/aFa4gy3Gf9Q11jD8SQ8EM03",
+  audit: "https://buy.stripe.com/28EcN44Kj6DPgex6KI8EM01",
 };
 
 const setStatus = (message, tone = "") => {

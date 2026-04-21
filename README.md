@@ -18,16 +18,16 @@ Black/gold service site with Stripe Payment Links, quote intake, and quote admin
 
 Create three Stripe Payment Links in Stripe:
 
-- WordPress Breakout: `$3,500`
-- Independent Academy: `$3,500`
+- Project Deposit: `$1,750`
+- Final Payment: `$1,750`
 - Security & Logic Audit: `$450`
 
 Then paste those URLs into `script.js`:
 
 ```js
 const paymentLinks = {
-  wordpress: "https://buy.stripe.com/...",
-  academy: "https://buy.stripe.com/...",
+  serviceDeposit: "https://buy.stripe.com/...",
+  serviceFinal: "https://buy.stripe.com/...",
   audit: "https://buy.stripe.com/...",
 };
 ```
