@@ -381,6 +381,13 @@ h3 {
   font-weight: 800;
 }
 
+.service-price {
+  margin-bottom: 18px;
+  color: var(--text) !important;
+  font-size: 1.2rem;
+  font-weight: 900;
+}
+
 .service-card ul {
   display: grid;
   gap: 10px;
@@ -456,6 +463,12 @@ h3 {
   flex-direction: column;
   padding: 24px;
   border: 1px solid var(--line);
+}
+
+.quote-card {
+  background:
+    linear-gradient(180deg, rgba(114, 225, 209, 0.08), transparent 48%),
+    var(--panel);
 }
 
 .payment-card h3 {

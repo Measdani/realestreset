@@ -35,11 +35,14 @@
             and independence from platform rent.
           </p>
           <div class="hero-actions" aria-label="Primary actions">
-            <button class="button primary" type="button" data-checkout="deposit">
-              Pay project deposit
-            </button>
+            <a
+              class="button primary"
+              href="mailto:hello@realestreset.com?subject=MVP%20quote%20request&body=Tell%20me%20about%20your%20MVP%2C%20the%20users%2C%20must-have%20features%2C%20login%20or%20payment%20needs%2C%20timeline%2C%20and%20budget%20range."
+            >
+              Get MVP quote
+            </a>
             <button class="button secondary" type="button" data-checkout="audit">
-              Start audit
+              Pay $450 audit
             </button>
           </div>
           <dl class="signal-list" aria-label="Service priorities">
@@ -81,6 +84,7 @@
             <div class="service-number">01</div>
             <h3>The Founders Engine</h3>
             <p class="service-subtitle">Architect &amp; Build Service</p>
+            <p class="service-price">Quote after project info</p>
             <p>
               I design the logic first, pressure-test the security model, then build the
               MVP with a cyber-first foundation.
@@ -96,6 +100,7 @@
             <div class="service-number">02</div>
             <h3>The WordPress Breakout</h3>
             <p class="service-subtitle">Migration to Standalone</p>
+            <p class="service-price">$3,500</p>
             <p>
               Decouple from WordPress into a standalone Netlify build to reduce
               maintenance costs, plugin exposure, and avoidable security risk.
@@ -111,6 +116,7 @@
             <div class="service-number">03</div>
             <h3>The Independent Academy</h3>
             <p class="service-subtitle">Custom LMS</p>
+            <p class="service-price">$3,500</p>
             <p>
               Built-from-scratch teaching platforms for creators and operators who want
               ownership instead of platform rent.
@@ -126,6 +132,7 @@
             <div class="service-number">04</div>
             <h3>The Security &amp; Logic Audit</h3>
             <p class="service-subtitle">Website Technical Audit</p>
+            <p class="service-price">$450</p>
             <p>
               A deep dive into your current stack to find speed bottlenecks, brittle
               logic, plugin risk, and cyber vulnerabilities.
@@ -166,29 +173,40 @@
 
       <section class="payment-section" id="payments" aria-labelledby="payments-title">
         <div class="payment-copy">
-          <p class="eyebrow">Upfront payment</p>
-          <h2 id="payments-title">Start with a deposit or pay for an audit.</h2>
+          <p class="eyebrow">Pricing</p>
+          <h2 id="payments-title">Pay fixed services or request an MVP quote.</h2>
           <p>
-            Stripe Checkout handles the payment flow. The site creates the checkout
-            session server-side through a Netlify Function, keeping secret keys out of
-            the browser.
+            Audits are fixed at $450. WordPress breakouts and independent teaching
+            platforms are fixed at $3,500. Scratch MVPs need project info first so the
+            quote matches the build.
           </p>
         </div>
         <div class="payment-options" aria-label="Payment options">
           <article class="payment-card">
-            <p class="payment-label">Project Deposit</p>
-            <h3>Reserve build capacity</h3>
+            <p class="payment-label">$3,500</p>
+            <h3>WordPress Breakout</h3>
             <p>
-              Use this to start a Founders Engine, WordPress Breakout, or Independent
-              Academy engagement.
+              Move from WordPress to a standalone website with cleaner hosting, fewer
+              maintenance costs, and less plugin risk.
             </p>
-            <button class="button primary full" type="button" data-checkout="deposit">
-              Pay deposit
+            <button class="button primary full" type="button" data-checkout="wordpress">
+              Pay for breakout
             </button>
           </article>
           <article class="payment-card">
-            <p class="payment-label">Technical Audit</p>
-            <h3>Find the weak points</h3>
+            <p class="payment-label">$3,500</p>
+            <h3>Independent Academy</h3>
+            <p>
+              Build a standalone teaching platform that you own, without platform rent
+              eating into the margin.
+            </p>
+            <button class="button primary full" type="button" data-checkout="academy">
+              Pay for academy
+            </button>
+          </article>
+          <article class="payment-card">
+            <p class="payment-label">$450</p>
+            <h3>Security &amp; Logic Audit</h3>
             <p>
               Use this for a paid security, performance, and logic review of an existing
               website or stack.
@@ -196,6 +214,20 @@
             <button class="button secondary full" type="button" data-checkout="audit">
               Pay for audit
             </button>
+          </article>
+          <article class="payment-card quote-card">
+            <p class="payment-label">Quote</p>
+            <h3>Founders Engine MVP</h3>
+            <p>
+              Send the core idea, users, must-have features, login/payment needs,
+              timeline, and budget range.
+            </p>
+            <a
+              class="button secondary full"
+              href="mailto:hello@realestreset.com?subject=MVP%20quote%20request&body=Tell%20me%20about%20your%20MVP%2C%20the%20users%2C%20must-have%20features%2C%20login%20or%20payment%20needs%2C%20timeline%2C%20and%20budget%20range."
+            >
+              Request quote
+            </a>
           </article>
         </div>
         <p class="checkout-status" id="checkoutStatus" role="status" aria-live="polite"></p>

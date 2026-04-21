@@ -1,13 +1,18 @@
 const Stripe = require("stripe");
 
 const products = {
-  deposit: {
-    priceEnv: "STRIPE_DEPOSIT_PRICE_ID",
-    label: "Realest Reset Project Deposit",
+  wordpress: {
+    priceEnv: "STRIPE_WORDPRESS_PRICE_ID",
+    label: "Realest Reset WordPress Breakout",
+  },
+  academy: {
+    priceEnv: "STRIPE_ACADEMY_PRICE_ID",
+    label: "Realest Reset Independent Academy",
   },
   audit: {
     priceEnv: "STRIPE_AUDIT_PRICE_ID",
     label: "Realest Reset Security & Logic Audit",
+    submitType: "book",
   },
 };
 
@@ -60,7 +65,7 @@ exports.handler = async (event) => {
 
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
-      submit_type: payload.product === "audit" ? "book" : "pay",
+      submit_type: product.submitType || "pay",
       line_items: [{ price: priceId, quantity: 1 }],
       client_reference_id: payload.product,
       metadata: {

@@ -1,6 +1,6 @@
 # Realest Reset
 
-Minimal dark one-page service site with Stripe Checkout for upfront project deposits and website technical audits.
+Minimal dark one-page service site with Stripe Checkout for fixed-price services and website technical audits.
 
 ## Files
 
@@ -11,16 +11,18 @@ Minimal dark one-page service site with Stripe Checkout for upfront project depo
 
 ## Stripe setup
 
-Create two one-time Stripe Prices:
+Create three one-time Stripe Prices:
 
-- Project deposit: set the ID as `STRIPE_DEPOSIT_PRICE_ID`
-- Technical audit: set the ID as `STRIPE_AUDIT_PRICE_ID`
+- WordPress Breakout: `$3,500`, set the ID as `STRIPE_WORDPRESS_PRICE_ID`
+- Independent Academy: `$3,500`, set the ID as `STRIPE_ACADEMY_PRICE_ID`
+- Security & Logic Audit: `$450`, set the ID as `STRIPE_AUDIT_PRICE_ID`
 
 Then set these environment variables in Netlify with Functions scope:
 
 ```bash
 STRIPE_SECRET_KEY=sk_test_your_secret_key
-STRIPE_DEPOSIT_PRICE_ID=price_your_deposit_price_id
+STRIPE_WORDPRESS_PRICE_ID=price_your_wordpress_breakout_price_id
+STRIPE_ACADEMY_PRICE_ID=price_your_independent_academy_price_id
 STRIPE_AUDIT_PRICE_ID=price_your_audit_price_id
 ```
 

@@ -2,8 +2,9 @@ const statusEl = document.querySelector("#checkoutStatus");
 const checkoutButtons = document.querySelectorAll("[data-checkout]");
 
 const checkoutLabels = {
-  deposit: "project deposit",
-  audit: "technical audit",
+  wordpress: "WordPress Breakout",
+  academy: "Independent Academy",
+  audit: "Security & Logic Audit",
 };
 
 const setStatus = (message, tone = "") => {
@@ -57,7 +58,9 @@ const checkoutParams = new URLSearchParams(window.location.search);
 const checkoutState = checkoutParams.get("checkout");
 
 if (checkoutState === "success") {
-  setStatus("Payment received. I will follow up with next steps.", "success");
+  const product = checkoutParams.get("product");
+  const label = checkoutLabels[product] || "service";
+  setStatus(`Payment received for ${label}. I will follow up with next steps.`, "success");
 }
 
 if (checkoutState === "cancelled") {
