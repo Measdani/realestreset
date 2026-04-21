@@ -2,15 +2,15 @@
   "name": "realest-reset",
   "version": "0.1.0",
   "private": true,
-  "description": "Minimal dark one-page service site with Stripe Checkout via Netlify Functions.",
+  "description": "Black/gold service site with Stripe Checkout, quote intake, and quote admin for Vercel.",
   "scripts": {
-    "dev": "netlify dev",
-    "check": "node --check script.js && node --check netlify/functions/create-checkout-session.js"
+    "dev": "vercel dev",
+    "check": "node --check script.js && node --check quote.js && node --check admin.js && node --check api/create-checkout-session.js && node --check api/quotes.js"
   },
   "dependencies": {
     "stripe": "^18.5.0"
   },
   "devDependencies": {
-    "netlify-cli": "^24.11.3"
+    "vercel": "^50.28.0"
   }
 }

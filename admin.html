@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <title>Quote Admin | Realest Reset</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="site-shell page-shell admin-shell">
+      <header class="topbar" aria-label="Admin navigation">
+        <a class="brand" href="index.html" aria-label="Realest Reset home">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span>Realest Reset</span>
+        </a>
+        <nav>
+          <a href="quote.html">Quote Form</a>
+          <a href="pricing.html">Pricing</a>
+          <a href="index.html">Site</a>
+        </nav>
+        <button class="nav-cta" type="button" id="refreshQuotes">Refresh</button>
+      </header>
+
+      <main class="page-main">
+        <section class="page-hero">
+          <p class="section-kicker">Admin</p>
+          <h1>Quote requests.</h1>
+          <p>
+            Review MVP and audit requests. Use your admin token to load production
+            submissions from Vercel storage, or review local test submissions from this browser.
+          </p>
+        </section>
+
+        <section class="admin-layout">
+          <aside class="admin-panel">
+            <label>
+              <span>Admin token</span>
+              <input id="adminToken" type="password" autocomplete="off" placeholder="Required for production data">
+            </label>
+            <div class="admin-actions">
+              <button class="button primary" type="button" id="loadRemote">Load remote</button>
+              <button class="button secondary" type="button" id="loadLocal">Load local</button>
+            </div>
+            <label>
+              <span>Filter</span>
+              <select id="typeFilter">
+                <option value="all">All requests</option>
+                <option value="mvp">MVP builds</option>
+                <option value="audit">Audits</option>
+              </select>
+            </label>
+            <label>
+              <span>Status</span>
+              <select id="statusFilter">
+                <option value="all">All statuses</option>
+                <option value="new">New</option>
+                <option value="reviewing">Reviewing</option>
+                <option value="fit">Fit</option>
+                <option value="not-fit">Not fit</option>
+                <option value="closed">Closed</option>
+              </select>
+            </label>
+            <button class="text-link" type="button" id="exportQuotes">Export JSON</button>
+            <p class="quote-status" id="adminStatus" role="status" aria-live="polite"></p>
+          </aside>
+
+          <section class="admin-results">
+            <div class="admin-list" id="quoteList" aria-label="Quote submissions"></div>
+            <article class="admin-detail" id="quoteDetail">
+              <p class="section-kicker">Select a request</p>
+              <h2>No request selected.</h2>
+              <p>Choose a submission from the list to review details, update status, or add notes.</p>
+            </article>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <script src="admin.js" defer></script>
+  </body>
+</html>
