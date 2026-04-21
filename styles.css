@@ -122,11 +122,11 @@ a {
 
 .hero {
   position: relative;
-  min-height: 94svh;
+  min-height: 62svh;
   display: grid;
-  align-items: end;
+  align-items: center;
   overflow: hidden;
-  padding: 120px 18px 52px;
+  padding: 108px 18px 46px;
   border-bottom: 1px solid var(--line);
 }
 
@@ -175,10 +175,10 @@ p {
 }
 
 h1 {
-  max-width: 820px;
-  margin-bottom: 22px;
-  font-size: clamp(3.4rem, 11vw, 8.6rem);
-  line-height: 0.92;
+  max-width: 650px;
+  margin-bottom: 18px;
+  font-size: clamp(2.35rem, 7vw, 5.4rem);
+  line-height: 0.96;
   letter-spacing: 0;
 }
 
@@ -197,10 +197,10 @@ h3 {
 }
 
 .lede {
-  max-width: 650px;
-  margin-bottom: 32px;
+  max-width: 590px;
+  margin-bottom: 24px;
   color: var(--muted);
-  font-size: clamp(1.08rem, 2vw, 1.38rem);
+  font-size: clamp(1rem, 1.6vw, 1.18rem);
 }
 
 .hero-actions,
@@ -271,23 +271,23 @@ h3 {
 }
 
 .signal-list {
-  width: min(100%, 760px);
+  width: min(100%, 680px);
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1px;
-  margin: 56px 0 0;
+  margin: 30px 0 0;
   border: 1px solid var(--line);
   background: var(--line);
 }
 
 .signal-list div {
-  min-height: 106px;
-  padding: 18px;
+  min-height: 82px;
+  padding: 14px;
   background: rgba(13, 16, 13, 0.78);
 }
 
 .signal-list dt {
-  margin-bottom: 18px;
+  margin-bottom: 10px;
   color: var(--amber);
   font-size: 0.78rem;
   font-weight: 800;
@@ -296,7 +296,7 @@ h3 {
 .signal-list dd {
   margin: 0;
   color: var(--muted);
-  font-size: 0.95rem;
+  font-size: 0.86rem;
 }
 
 .section {
@@ -635,8 +635,8 @@ h3 {
   }
 
   .hero {
-    min-height: 92svh;
-    padding-inline: 14px;
+    min-height: auto;
+    padding: 96px 14px 38px;
   }
 
   .hero-actions {
