@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Realest Reset pricing for audits, WordPress breakouts, custom teaching platforms, and MVP quotes.">
+    <title>Pricing | Realest Reset</title>
+    <link rel="preconnect" href="https://checkout.stripe.com">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="site-shell page-shell">
+      <header class="topbar" aria-label="Main navigation">
+        <a class="brand" href="index.html" aria-label="Realest Reset home">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span>Realest Reset</span>
+        </a>
+        <nav>
+          <a href="services.html">Services</a>
+          <a href="process.html">Process</a>
+          <a href="results.html">Results</a>
+          <a href="pricing.html" aria-current="page">Pricing</a>
+        </nav>
+        <a
+          class="nav-cta"
+          href="mailto:hello@realestreset.com?subject=MVP%20quote%20request&body=Tell%20me%20about%20your%20MVP%2C%20the%20users%2C%20must-have%20features%2C%20login%20or%20payment%20needs%2C%20timeline%2C%20and%20budget%20range."
+        >
+          Get an MVP quote
+        </a>
+      </header>
+
+      <main class="page-main">
+        <section class="page-hero" aria-labelledby="pricing-title">
+          <p class="section-kicker">Pricing</p>
+          <h1 id="pricing-title">Pay fixed services or request a quote.</h1>
+          <p>
+            Audits are fixed at $450. WordPress breakouts and independent teaching
+            platforms are fixed at $3,500. Scratch MVPs need project info first.
+          </p>
+        </section>
+
+        <section class="payment-section page-pricing" aria-label="Payment options">
+          <div class="payment-copy">
+            <p class="section-kicker">Stripe checkout</p>
+            <h2>Start the right engagement.</h2>
+          </div>
+          <div class="payment-options">
+            <article class="payment-card">
+              <p class="payment-label">$3,500</p>
+              <h3>WordPress Breakout</h3>
+              <p>Standalone platform migration with lower costs and fewer plugin risks.</p>
+              <button class="button primary full" type="button" data-checkout="wordpress">
+                Pay for breakout
+              </button>
+            </article>
+            <article class="payment-card">
+              <p class="payment-label">$3,500</p>
+              <h3>Independent Academy</h3>
+              <p>Own the teaching platform, student flow, access logic, and margins.</p>
+              <button class="button primary full" type="button" data-checkout="academy">
+                Pay for academy
+              </button>
+            </article>
+            <article class="payment-card">
+              <p class="payment-label">$450</p>
+              <h3>Security &amp; Logic Audit</h3>
+              <p>Security, performance, and logic review with prioritized fixes.</p>
+              <button class="button secondary full" type="button" data-checkout="audit">
+                Pay for audit
+              </button>
+            </article>
+            <article class="payment-card quote-card">
+              <p class="payment-label">Quote</p>
+              <h3>Founders Engine MVP</h3>
+              <p>Send the idea, users, features, login/payment needs, timeline, and budget.</p>
+              <a
+                class="button secondary full"
+                href="mailto:hello@realestreset.com?subject=MVP%20quote%20request&body=Tell%20me%20about%20your%20MVP%2C%20the%20users%2C%20must-have%20features%2C%20login%20or%20payment%20needs%2C%20timeline%2C%20and%20budget%20range."
+              >
+                Request quote
+              </a>
+            </article>
+          </div>
+          <p class="checkout-status" id="checkoutStatus" role="status" aria-live="polite"></p>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <p>Realest Reset</p>
+        <a href="mailto:hello@realestreset.com">hello@realestreset.com</a>
+      </footer>
+    </div>
+    <script src="script.js" defer></script>
+  </body>
+</html>

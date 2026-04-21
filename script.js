@@ -74,12 +74,6 @@ let height = 0;
 let animationFrame = 0;
 const pointer = { x: 0.62, y: 0.42 };
 
-const nodes = Array.from({ length: 42 }, (_, index) => ({
-  x: (index % 7) / 6,
-  y: Math.floor(index / 7) / 5,
-  phase: index * 0.39,
-}));
-
 const resizeCanvas = () => {
   if (!canvas || !context) return;
   const scale = Math.min(window.devicePixelRatio || 1, 2);
@@ -94,39 +88,72 @@ const drawSignalMap = (time = 0) => {
   if (!context) return;
   context.clearRect(0, 0, width, height);
 
-  const drift = time * 0.00014;
-  const points = nodes.map((node) => {
-    const pulse = Math.sin(time * 0.001 + node.phase);
-    return {
-      x: width * (0.2 + node.x * 0.76) + Math.sin(drift + node.phase) * 24,
-      y: height * (0.13 + node.y * 0.75) + pulse * 18,
-      hot: pulse > 0.32,
-    };
-  });
+  const pulse = Math.sin(time * 0.0007) * 24;
+  const focusX = pointer.x * width;
+  const focusY = pointer.y * height;
+  const glow = context.createRadialGradient(focusX, focusY, 0, focusX, focusY, width * 0.48);
+  glow.addColorStop(0, "rgba(243, 207, 124, 0.18)");
+  glow.addColorStop(0.42, "rgba(214, 167, 77, 0.05)");
+  glow.addColorStop(1, "rgba(214, 167, 77, 0)");
+  context.fillStyle = glow;
+  context.fillRect(0, 0, width, height);
 
+  const ribbonGradient = context.createLinearGradient(width * 0.2, 0, width, height * 0.5);
+  ribbonGradient.addColorStop(0, "rgba(243, 207, 124, 0)");
+  ribbonGradient.addColorStop(0.34, "rgba(243, 207, 124, 0.86)");
+  ribbonGradient.addColorStop(0.62, "rgba(214, 167, 77, 0.38)");
+  ribbonGradient.addColorStop(1, "rgba(243, 207, 124, 0)");
+
+  context.save();
+  context.globalCompositeOperation = "screen";
+  context.shadowColor = "rgba(243, 207, 124, 0.45)";
+  context.shadowBlur = 34;
+
+  for (let index = 0; index < 7; index += 1) {
+    const offset = index * 12;
+    context.globalAlpha = 0.2 + index * 0.055;
+    context.lineWidth = 58 - index * 6;
+    context.strokeStyle = ribbonGradient;
+    context.beginPath();
+    context.moveTo(width * 0.24, height * 0.1 + offset);
+    context.bezierCurveTo(
+      width * 0.46,
+      height * 0.1 + pulse + offset,
+      width * 0.62,
+      height * 0.28 - pulse * 0.5 + offset,
+      width * 0.54,
+      height * 0.43 + offset,
+    );
+    context.bezierCurveTo(
+      width * 0.47,
+      height * 0.59 + offset,
+      width * 0.78,
+      height * 0.54 - pulse + offset,
+      width * 0.96,
+      height * 0.42 + offset,
+    );
+    context.stroke();
+  }
+
+  context.shadowBlur = 0;
+  context.globalAlpha = 0.55;
   context.lineWidth = 1;
-  points.forEach((point, index) => {
-    const right = points[index + 1];
-    const down = points[index + 7];
-    [right, down].forEach((target) => {
-      if (!target) return;
-      const distanceToPointer = Math.hypot(
-        (point.x + target.x) / 2 - pointer.x * width,
-        (point.y + target.y) / 2 - pointer.y * height,
-      );
-      const focus = Math.max(0, 1 - distanceToPointer / 360);
-      context.strokeStyle = `rgba(114, 225, 209, ${0.08 + focus * 0.28})`;
-      context.beginPath();
-      context.moveTo(point.x, point.y);
-      context.lineTo(target.x, target.y);
-      context.stroke();
-    });
-  });
-
-  points.forEach((point) => {
-    context.fillStyle = point.hot ? "rgba(159, 232, 112, 0.9)" : "rgba(244, 242, 232, 0.34)";
-    context.fillRect(point.x - 2, point.y - 2, 4, 4);
-  });
+  context.strokeStyle = "rgba(243, 207, 124, 0.34)";
+  for (let index = 0; index < 5; index += 1) {
+    const offset = index * 18;
+    context.beginPath();
+    context.moveTo(width * 0.32, height * 0.12 + offset);
+    context.bezierCurveTo(
+      width * 0.58,
+      height * 0.08 + offset,
+      width * 0.88,
+      height * 0.28 + offset,
+      width,
+      height * 0.38 + offset,
+    );
+    context.stroke();
+  }
+  context.restore();
 
   animationFrame = requestAnimationFrame(drawSignalMap);
 };

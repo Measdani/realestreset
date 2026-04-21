@@ -5,6 +5,7 @@ Minimal dark one-page service site with Stripe Checkout for fixed-price services
 ## Files
 
 - `index.html` is the one-page website.
+- `services.html`, `process.html`, `results.html`, and `pricing.html` are the separate header pages.
 - `styles.css` contains the full visual system.
 - `script.js` handles checkout button state and the lightweight hero canvas.
 - `netlify/functions/create-checkout-session.js` creates Stripe Checkout Sessions.
