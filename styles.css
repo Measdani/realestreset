@@ -91,6 +91,13 @@ a {
   text-transform: uppercase;
 }
 
+.brand-logo {
+  width: clamp(64px, 7vw, 92px);
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 0 18px rgba(214, 167, 77, 0.16));
+}
+
 .brand-mark {
   width: 15px;
   height: 15px;
