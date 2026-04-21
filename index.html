@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="Cyber-first MVP builds, WordPress breakouts, custom LMS platforms, and security logic audits for founders."
+    >
+    <title>Realest Reset | Cyber-First Founder Systems</title>
+    <link rel="preconnect" href="https://checkout.stripe.com">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="topbar" aria-label="Main navigation">
+      <a class="brand" href="#top" aria-label="Realest Reset home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>Realest Reset</span>
+      </a>
+      <nav>
+        <a href="#services">Services</a>
+        <a href="#process">Process</a>
+        <a href="#payments">Payments</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <canvas id="signalCanvas" aria-hidden="true"></canvas>
+        <div class="hero-content">
+          <p class="eyebrow">Cyber-first build partner for founders</p>
+          <h1 id="hero-title">Own the logic, the platform, and the margin.</h1>
+          <p class="lede">
+            Minimalist systems for founders who need secure MVPs, cleaner infrastructure,
+            and independence from platform rent.
+          </p>
+          <div class="hero-actions" aria-label="Primary actions">
+            <button class="button primary" type="button" data-checkout="deposit">
+              Pay project deposit
+            </button>
+            <button class="button secondary" type="button" data-checkout="audit">
+              Start audit
+            </button>
+          </div>
+          <dl class="signal-list" aria-label="Service priorities">
+            <div>
+              <dt>01</dt>
+              <dd>Logic mapped before pixels</dd>
+            </div>
+            <div>
+              <dt>02</dt>
+              <dd>Security treated as architecture</dd>
+            </div>
+            <div>
+              <dt>03</dt>
+              <dd>Fast static delivery when possible</dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="section intro" aria-labelledby="intro-title">
+        <div class="section-kicker">What this is</div>
+        <div class="section-copy">
+          <h2 id="intro-title">A direct, founder-friendly path from messy tech to owned infrastructure.</h2>
+          <p>
+            Realest Reset designs and builds systems where business logic, user flow,
+            security posture, and deployment strategy are handled together from the start.
+          </p>
+        </div>
+      </section>
+
+      <section class="section services" id="services" aria-labelledby="services-title">
+        <div class="section-kicker">Offers</div>
+        <div class="section-copy">
+          <h2 id="services-title">Services built around ownership.</h2>
+        </div>
+
+        <div class="service-grid">
+          <article class="service-card">
+            <div class="service-number">01</div>
+            <h3>The Founders Engine</h3>
+            <p class="service-subtitle">Architect &amp; Build Service</p>
+            <p>
+              I design the logic first, pressure-test the security model, then build the
+              MVP with a cyber-first foundation.
+            </p>
+            <ul>
+              <li>Product logic and user flow map</li>
+              <li>Secure MVP architecture</li>
+              <li>Launch-ready build plan</li>
+            </ul>
+          </article>
+
+          <article class="service-card">
+            <div class="service-number">02</div>
+            <h3>The WordPress Breakout</h3>
+            <p class="service-subtitle">Migration to Standalone</p>
+            <p>
+              Decouple from WordPress into a standalone Netlify build to reduce
+              maintenance costs, plugin exposure, and avoidable security risk.
+            </p>
+            <ul>
+              <li>Content and route migration</li>
+              <li>Static performance rebuild</li>
+              <li>Cleaner hosting workflow</li>
+            </ul>
+          </article>
+
+          <article class="service-card">
+            <div class="service-number">03</div>
+            <h3>The Independent Academy</h3>
+            <p class="service-subtitle">Custom LMS</p>
+            <p>
+              Built-from-scratch teaching platforms for creators and operators who want
+              ownership instead of platform rent.
+            </p>
+            <ul>
+              <li>Course structure and access rules</li>
+              <li>Student experience design</li>
+              <li>Better margin control</li>
+            </ul>
+          </article>
+
+          <article class="service-card service-card-highlight" id="audit">
+            <div class="service-number">04</div>
+            <h3>The Security &amp; Logic Audit</h3>
+            <p class="service-subtitle">Website Technical Audit</p>
+            <p>
+              A deep dive into your current stack to find speed bottlenecks, brittle
+              logic, plugin risk, and cyber vulnerabilities.
+            </p>
+            <ul>
+              <li>Speed and dependency review</li>
+              <li>Security exposure scan</li>
+              <li>Prioritized fix roadmap</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section process" id="process" aria-labelledby="process-title">
+        <div class="section-kicker">Method</div>
+        <div class="section-copy">
+          <h2 id="process-title">Fast does not mean loose.</h2>
+          <p>
+            Every engagement starts by finding the logic that makes the business work,
+            then shaping the build around security, performance, and maintainability.
+          </p>
+        </div>
+        <div class="process-steps">
+          <div>
+            <span>Map</span>
+            <p>Clarify the offer, user journey, risks, integrations, and launch surface.</p>
+          </div>
+          <div>
+            <span>Harden</span>
+            <p>Identify trust boundaries, data flow, access needs, and common failure points.</p>
+          </div>
+          <div>
+            <span>Build</span>
+            <p>Ship a tight MVP, migration, LMS, or audit roadmap with speed as a feature.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="payment-section" id="payments" aria-labelledby="payments-title">
+        <div class="payment-copy">
+          <p class="eyebrow">Upfront payment</p>
+          <h2 id="payments-title">Start with a deposit or pay for an audit.</h2>
+          <p>
+            Stripe Checkout handles the payment flow. The site creates the checkout
+            session server-side through a Netlify Function, keeping secret keys out of
+            the browser.
+          </p>
+        </div>
+        <div class="payment-options" aria-label="Payment options">
+          <article class="payment-card">
+            <p class="payment-label">Project Deposit</p>
+            <h3>Reserve build capacity</h3>
+            <p>
+              Use this to start a Founders Engine, WordPress Breakout, or Independent
+              Academy engagement.
+            </p>
+            <button class="button primary full" type="button" data-checkout="deposit">
+              Pay deposit
+            </button>
+          </article>
+          <article class="payment-card">
+            <p class="payment-label">Technical Audit</p>
+            <h3>Find the weak points</h3>
+            <p>
+              Use this for a paid security, performance, and logic review of an existing
+              website or stack.
+            </p>
+            <button class="button secondary full" type="button" data-checkout="audit">
+              Pay for audit
+            </button>
+          </article>
+        </div>
+        <p class="checkout-status" id="checkoutStatus" role="status" aria-live="polite"></p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Realest Reset</p>
+      <a href="mailto:hello@realestreset.com">hello@realestreset.com</a>
+    </footer>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>
