@@ -5,11 +5,9 @@
   "description": "Black/gold service site with Stripe Checkout, quote intake, and quote admin for Vercel.",
   "scripts": {
     "dev": "vercel dev",
-    "check": "node --check script.js && node --check quote.js && node --check admin.js && node --check api/create-checkout-session.js && node --check api/quotes.js"
+    "check": "node --check script.js && node --check quote.js && node --check admin.js && node --check api/quotes.js"
   },
-  "dependencies": {
-    "stripe": "^18.5.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "vercel": "^50.28.0"
   }

@@ -1,6 +1,6 @@
 # Realest Reset
 
-Black/gold service site with Stripe Checkout, quote intake, and quote admin.
+Black/gold service site with Stripe Payment Links, quote intake, and quote admin.
 
 ## Files
 
@@ -9,27 +9,27 @@ Black/gold service site with Stripe Checkout, quote intake, and quote admin.
 - `quote.html` is the MVP/audit intake form.
 - `admin.html` is the quote review dashboard.
 - `styles.css` contains the full visual system.
-- `script.js` handles checkout button state and the lightweight hero canvas.
+- `script.js` handles Stripe Payment Link redirects and the lightweight hero canvas.
 - `quote.js` handles the conditional quote form and local test fallback.
 - `admin.js` handles the quote admin dashboard.
-- `api/create-checkout-session.js` creates Stripe Checkout Sessions on Vercel.
 - `api/quotes.js` stores and reads quote submissions through Upstash Redis on Vercel.
 
-## Stripe setup
+## Stripe Payment Links
 
-Create three one-time Stripe Prices:
+Create three Stripe Payment Links in Stripe:
 
-- WordPress Breakout: `$3,500`, set the ID as `STRIPE_WORDPRESS_PRICE_ID`
-- Independent Academy: `$3,500`, set the ID as `STRIPE_ACADEMY_PRICE_ID`
-- Security & Logic Audit: `$450`, set the ID as `STRIPE_AUDIT_PRICE_ID`
+- WordPress Breakout: `$3,500`
+- Independent Academy: `$3,500`
+- Security & Logic Audit: `$450`
 
-Then set these environment variables in Vercel:
+Then paste those URLs into `script.js`:
 
-```bash
-STRIPE_SECRET_KEY=sk_test_your_secret_key
-STRIPE_WORDPRESS_PRICE_ID=price_your_wordpress_breakout_price_id
-STRIPE_ACADEMY_PRICE_ID=price_your_independent_academy_price_id
-STRIPE_AUDIT_PRICE_ID=price_your_audit_price_id
+```js
+const paymentLinks = {
+  wordpress: "https://buy.stripe.com/...",
+  academy: "https://buy.stripe.com/...",
+  audit: "https://buy.stripe.com/...",
+};
 ```
 
 ## Quote admin setup
@@ -59,7 +59,7 @@ Run the local dev server:
 npm run dev
 ```
 
-The visual pages can also be opened directly from `index.html`. Stripe Checkout and remote quote storage require Vercel-compatible API routes, so use a Vercel deployment when testing production payments and remote submissions.
+The visual pages can also be opened directly from `index.html`. Stripe Payment Links work as normal links. Remote quote storage requires the Vercel API route, so use a Vercel deployment when testing production submissions.
 
 ## Verify
 

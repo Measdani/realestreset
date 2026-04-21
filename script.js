@@ -7,6 +7,12 @@ const checkoutLabels = {
   audit: "Security & Logic Audit",
 };
 
+const paymentLinks = {
+  wordpress: "https://buy.stripe.com/4gM3cu0u37HTd2l9WU8EM00",
+  academy: "https://buy.stripe.com/4gM3cu0u37HTd2l9WU8EM00",
+  audit: "https://buy.stripe.com/4gM3cu0u37HTd2l9WU8EM00",
+};
+
 const setStatus = (message, tone = "") => {
   if (!statusEl) return;
   statusEl.textContent = message;
@@ -25,27 +31,16 @@ const setButtonsDisabled = (isDisabled) => {
 
 const startCheckout = async (product) => {
   const label = checkoutLabels[product] || "checkout";
-  setButtonsDisabled(true);
-  setStatus(`Opening secure Stripe Checkout for your ${label}...`);
+  const paymentUrl = paymentLinks[product];
 
-  try {
-    const response = await fetch("/api/create-checkout-session", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ product }),
-    });
-
-    const data = await response.json().catch(() => ({}));
-
-    if (!response.ok || !data.url) {
-      throw new Error(data.error || "Stripe Checkout is not configured yet.");
-    }
-
-    window.location.assign(data.url);
-  } catch (error) {
-    setStatus(error.message, "error");
-    setButtonsDisabled(false);
+  if (!paymentUrl) {
+    setStatus(`Add the Stripe Payment Link for ${label} in script.js.`, "error");
+    return;
   }
+
+  setButtonsDisabled(true);
+  setStatus(`Opening secure Stripe payment for your ${label}...`);
+  window.location.assign(paymentUrl);
 };
 
 checkoutButtons.forEach((button) => {
