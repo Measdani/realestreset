@@ -20,7 +20,10 @@
           <a href="pricing.html">Pricing</a>
           <a href="index.html">Site</a>
         </nav>
-        <button class="nav-cta" type="button" id="refreshQuotes">Refresh</button>
+        <div class="admin-nav-actions" id="adminNavActions" hidden>
+          <button class="nav-cta" type="button" id="refreshQuotes">Refresh</button>
+          <button class="nav-cta" type="button" id="logoutAdmin">Sign out</button>
+        </div>
       </header>
 
       <main class="page-main">
@@ -28,17 +31,26 @@
           <p class="section-kicker">Admin</p>
           <h1>Quote requests.</h1>
           <p>
-            Review MVP and audit requests. Use your admin token to load production
-            submissions from Vercel storage, or review local test submissions from this browser.
+            Review MVP and audit requests from a private admin area. Enter the
+            admin password to open production submissions.
           </p>
         </section>
 
-        <section class="admin-layout">
-          <aside class="admin-panel">
+        <section class="admin-login" id="adminLogin">
+          <form class="admin-login-card" id="adminLoginForm">
+            <p class="section-kicker">Private access</p>
+            <h2>Enter admin password.</h2>
             <label>
-              <span>Admin token</span>
-              <input id="adminToken" type="password" autocomplete="off" placeholder="Required for production data">
+              <span>Password</span>
+              <input id="adminPassword" type="password" autocomplete="current-password" required>
             </label>
+            <button class="button primary full" type="submit">Enter dashboard</button>
+            <p class="quote-status" id="authStatus" role="status" aria-live="polite"></p>
+          </form>
+        </section>
+
+        <section class="admin-layout" id="adminPrivate" hidden>
+          <aside class="admin-panel">
             <div class="admin-actions">
               <button class="button primary" type="button" id="loadRemote">Load remote</button>
               <button class="button secondary" type="button" id="loadLocal">Load local</button>

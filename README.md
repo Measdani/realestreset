@@ -13,6 +13,7 @@ Black/gold service site with Stripe Payment Links, quote intake, and quote admin
 - `quote.js` handles the conditional quote form and local test fallback.
 - `admin.js` handles the quote admin dashboard.
 - `api/quotes.js` stores and reads quote submissions through Upstash Redis on Vercel.
+- `api/admin-login.js` protects the admin dashboard with the admin password.
 
 ## Stripe Payment Links
 
@@ -39,10 +40,10 @@ Install Upstash Redis from the Vercel Marketplace, then set:
 ```bash
 UPSTASH_REDIS_REST_URL=https://your-upstash-endpoint.upstash.io
 UPSTASH_REDIS_REST_TOKEN=your_upstash_rest_token
-ADMIN_TOKEN=choose_a_long_private_admin_token
+ADMIN_TOKEN=choose_a_long_private_admin_password
 ```
 
-Use `admin.html` with `ADMIN_TOKEN` to load and update remote quote submissions.
+Use `admin.html` and enter `ADMIN_TOKEN` as the admin password to load and update remote quote submissions.
 Before Upstash is connected, `quote.html` saves submissions to local browser storage for testing.
 
 ## Local development

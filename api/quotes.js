@@ -1,3 +1,7 @@
+const crypto = require("crypto");
+
+const adminSessionCookie = "rr_admin_session";
+
 const isRedisConfigured = () =>
   Boolean(process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN);
 
@@ -47,10 +51,53 @@ const validateSubmission = (submission) => {
   return "";
 };
 
+const toBase64Url = (value) =>
+  value.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
+
+const signValue = (value) =>
+  toBase64Url(crypto.createHmac("sha256", process.env.ADMIN_TOKEN).update(String(value)).digest("base64"));
+
+const safeEqual = (left, right) => {
+  const leftBuffer = Buffer.from(String(left));
+  const rightBuffer = Buffer.from(String(right));
+  return leftBuffer.length === rightBuffer.length && crypto.timingSafeEqual(leftBuffer, rightBuffer);
+};
+
+const decodeCookie = (value) => {
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    return value;
+  }
+};
+
+const parseCookies = (req) =>
+  String(req.headers.cookie || "")
+    .split(";")
+    .map((cookie) => cookie.trim())
+    .filter(Boolean)
+    .reduce((cookies, cookie) => {
+      const separator = cookie.indexOf("=");
+      if (separator === -1) return cookies;
+      cookies[cookie.slice(0, separator)] = decodeCookie(cookie.slice(separator + 1));
+      return cookies;
+    }, {});
+
+const hasAdminSession = (req) => {
+  if (!process.env.ADMIN_TOKEN) return false;
+
+  const value = parseCookies(req)[adminSessionCookie];
+  const [expiresAt, signature] = String(value || "").split(".");
+  if (!expiresAt || !signature || Number(expiresAt) <= Date.now()) return false;
+
+  return safeEqual(signature, signValue(expiresAt));
+};
+
 const requireAdmin = (req) => {
   const authorization = req.headers.authorization || "";
   const token = authorization.replace(/^Bearer\s+/i, "") || req.headers["x-admin-token"];
-  return Boolean(process.env.ADMIN_TOKEN && token && token === process.env.ADMIN_TOKEN);
+  const hasAdminToken = Boolean(process.env.ADMIN_TOKEN && token && safeEqual(token, process.env.ADMIN_TOKEN));
+  return hasAdminToken || hasAdminSession(req);
 };
 
 const normalizeSubmission = (payload) => ({
@@ -123,7 +170,7 @@ module.exports = async (req, res) => {
 
     if (req.method === "GET") {
       if (!requireAdmin(req)) {
-        return res.status(401).json({ error: "Admin token required" });
+        return res.status(401).json({ error: "Admin password required" });
       }
 
       const ids = (await redisCommand(["LRANGE", "quotes:index", "0", "199"])) || [];
@@ -139,7 +186,7 @@ module.exports = async (req, res) => {
 
     if (req.method === "PATCH") {
       if (!requireAdmin(req)) {
-        return res.status(401).json({ error: "Admin token required" });
+        return res.status(401).json({ error: "Admin password required" });
       }
 
       const payload = getBody(req);

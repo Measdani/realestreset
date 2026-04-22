@@ -1,5 +1,10 @@
 const localKey = "rr_quote_submissions";
-const tokenInput = document.querySelector("#adminToken");
+const loginSection = document.querySelector("#adminLogin");
+const loginForm = document.querySelector("#adminLoginForm");
+const passwordInput = document.querySelector("#adminPassword");
+const privateSection = document.querySelector("#adminPrivate");
+const navActions = document.querySelector("#adminNavActions");
+const logoutButton = document.querySelector("#logoutAdmin");
 const loadRemoteButton = document.querySelector("#loadRemote");
 const loadLocalButton = document.querySelector("#loadLocal");
 const refreshButton = document.querySelector("#refreshQuotes");
@@ -9,15 +14,35 @@ const statusFilter = document.querySelector("#statusFilter");
 const listEl = document.querySelector("#quoteList");
 const detailEl = document.querySelector("#quoteDetail");
 const statusEl = document.querySelector("#adminStatus");
+const authStatusEl = document.querySelector("#authStatus");
 
 let submissions = [];
 let selectedId = "";
-let source = "local";
+let source = "remote";
 
 const setStatus = (message, tone = "") => {
+  if (!statusEl) return;
   statusEl.textContent = message;
   statusEl.dataset.tone = tone;
 };
+
+const setAuthStatus = (message, tone = "") => {
+  if (!authStatusEl) return;
+  authStatusEl.textContent = message;
+  authStatusEl.dataset.tone = tone;
+};
+
+const escapeHtml = (value) =>
+  String(value ?? "").replace(/[&<>"']/g, (character) => {
+    const entities = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;",
+    };
+    return entities[character];
+  });
 
 const formatDate = (value) =>
   value
@@ -33,6 +58,20 @@ const getLocal = () => JSON.parse(localStorage.getItem(localKey) || "[]");
 
 const saveLocal = () => {
   localStorage.setItem(localKey, JSON.stringify(submissions));
+};
+
+const resetDetail = () => {
+  detailEl.innerHTML = `
+    <p class="section-kicker">Select a request</p>
+    <h2>No request selected.</h2>
+    <p>Choose a submission from the list to review details, update status, or add notes.</p>
+  `;
+};
+
+const setUnlocked = (isUnlocked) => {
+  loginSection.hidden = isUnlocked;
+  privateSection.hidden = !isUnlocked;
+  navActions.hidden = !isUnlocked;
 };
 
 const filteredSubmissions = () =>
@@ -57,7 +96,7 @@ const renderList = () => {
     button.className = `quote-row ${submission.id === selectedId ? "active" : ""}`;
     button.innerHTML = `
       <span>${submission.projectType === "audit" ? "Audit" : "MVP"}</span>
-      <strong>${submission.businessName || submission.fullName}</strong>
+      <strong>${escapeHtml(submission.businessName || submission.fullName)}</strong>
       <small>${formatDate(submission.createdAt)} / ${submission.status || "new"}</small>
     `;
     button.addEventListener("click", () => {
@@ -72,15 +111,16 @@ const renderList = () => {
 const detailPair = (label, value) => {
   const display = Array.isArray(value) ? value.join(", ") : value;
   if (!display) return "";
-  return `<dt>${label}</dt><dd>${display}</dd>`;
+  return `<dt>${escapeHtml(label)}</dt><dd>${escapeHtml(display)}</dd>`;
 };
 
 const renderDetail = (submission) => {
   const isAudit = submission.projectType === "audit";
+  const email = String(submission.email || "");
   detailEl.innerHTML = `
     <p class="section-kicker">${isAudit ? "Security & Logic Audit" : "MVP Build"}</p>
-    <h2>${submission.businessName || "Untitled request"}</h2>
-    <p>${submission.fullName} / <a href="mailto:${submission.email}">${submission.email}</a></p>
+    <h2>${escapeHtml(submission.businessName || "Untitled request")}</h2>
+    <p>${escapeHtml(submission.fullName)} / <a href="mailto:${encodeURIComponent(email)}">${escapeHtml(email)}</a></p>
     <dl class="quote-detail-list">
       ${detailPair("Website", submission.website)}
       ${detailPair("Created", formatDate(submission.createdAt))}
@@ -98,7 +138,7 @@ const renderDetail = (submission) => {
       </label>
       <label>
         <span>Admin notes</span>
-        <textarea id="adminNotes" rows="4">${submission.adminNotes || ""}</textarea>
+        <textarea id="adminNotes" rows="4">${escapeHtml(submission.adminNotes || "")}</textarea>
       </label>
       <button class="button primary" type="button" id="saveStatus">Save update</button>
     </div>
@@ -141,13 +181,15 @@ const updateSubmission = async (id) => {
     try {
       const response = await fetch("/api/quotes", {
         method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${tokenInput.value}`,
-        },
+        credentials: "same-origin",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id, status, adminNotes }),
       });
       const data = await response.json().catch(() => ({}));
+      if (response.status === 401) {
+        lockDashboard("Session expired. Enter the admin password again.");
+        return;
+      }
       if (!response.ok) throw new Error(data.error || "Unable to update remote request");
       submissions[index] = data.submission;
       setStatus("Remote request updated.", "success");
@@ -178,9 +220,13 @@ const loadRemote = async () => {
   setStatus("Loading remote submissions...");
   try {
     const response = await fetch("/api/quotes", {
-      headers: { Authorization: `Bearer ${tokenInput.value}` },
+      credentials: "same-origin",
     });
     const data = await response.json().catch(() => ({}));
+    if (response.status === 401) {
+      lockDashboard("Session expired. Enter the admin password again.");
+      return;
+    }
     if (!response.ok) throw new Error(data.error || "Unable to load submissions");
     submissions = data.submissions || [];
     selectedId = "";
@@ -201,6 +247,74 @@ const exportQuotes = () => {
   URL.revokeObjectURL(url);
 };
 
+const lockDashboard = (message = "") => {
+  submissions = [];
+  selectedId = "";
+  setUnlocked(false);
+  listEl.innerHTML = "";
+  resetDetail();
+  setStatus("");
+  setAuthStatus(message, message ? "error" : "");
+  passwordInput.focus();
+};
+
+const loginAdmin = async (event) => {
+  event.preventDefault();
+  setAuthStatus("Checking password...");
+
+  try {
+    const response = await fetch("/api/admin-login", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ password: passwordInput.value }),
+    });
+    const data = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      throw new Error(data.error || "Unable to sign in");
+    }
+
+    passwordInput.value = "";
+    setAuthStatus("");
+    setUnlocked(true);
+    loadRemote();
+  } catch (error) {
+    setAuthStatus(error.message, "error");
+  }
+};
+
+const logoutAdmin = async () => {
+  await fetch("/api/admin-login", {
+    method: "DELETE",
+    credentials: "same-origin",
+  }).catch(() => {});
+  lockDashboard("Signed out.");
+};
+
+const checkSession = async () => {
+  setAuthStatus("Checking admin session...");
+
+  try {
+    const response = await fetch("/api/admin-login", {
+      credentials: "same-origin",
+    });
+
+    if (!response.ok) {
+      lockDashboard("");
+      return;
+    }
+
+    setAuthStatus("");
+    setUnlocked(true);
+    loadRemote();
+  } catch {
+    lockDashboard("Enter the admin password to continue.");
+  }
+};
+
+loginForm.addEventListener("submit", loginAdmin);
+logoutButton.addEventListener("click", logoutAdmin);
 loadRemoteButton.addEventListener("click", loadRemote);
 loadLocalButton.addEventListener("click", loadLocal);
 refreshButton.addEventListener("click", () => (source === "remote" ? loadRemote() : loadLocal()));
@@ -208,4 +322,4 @@ exportButton.addEventListener("click", exportQuotes);
 typeFilter.addEventListener("change", renderList);
 statusFilter.addEventListener("change", renderList);
 
-loadLocal();
+checkSession();

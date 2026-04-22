@@ -25,6 +25,10 @@
   box-sizing: border-box;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -150,6 +154,12 @@ a {
   border: 1px solid var(--gold);
   color: var(--cream);
   background: rgba(5, 5, 5, 0.32);
+}
+
+.admin-nav-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
 }
 
 .nav-cta::after,
@@ -823,6 +833,7 @@ h3 {
 }
 
 .quote-shell,
+.admin-login,
 .admin-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -831,6 +842,7 @@ h3 {
 
 .quote-form,
 .form-success,
+.admin-login-card,
 .admin-panel,
 .admin-detail,
 .admin-list {
@@ -852,6 +864,18 @@ h3 {
   padding: 30px;
   border: 0;
   background: rgba(9, 11, 13, 0.92);
+}
+
+.admin-login-card {
+  width: min(100%, 470px);
+  display: grid;
+  gap: 18px;
+  padding: 28px;
+}
+
+.admin-login-card h2 {
+  margin: 0;
+  font-size: clamp(1.45rem, 3vw, 2.1rem);
 }
 
 .quote-type {
@@ -905,6 +929,7 @@ h3 {
 }
 
 .quote-form label span,
+.admin-login-card label span,
 .admin-panel label span,
 .admin-update label span {
   display: block;
@@ -923,6 +948,7 @@ h3 {
 
 .quote-form input:not([type="radio"]):not([type="checkbox"]),
 .quote-form textarea,
+.admin-login-card input,
 .admin-panel input,
 .admin-panel select,
 .admin-update select,
@@ -944,6 +970,7 @@ h3 {
 
 .quote-form input:focus,
 .quote-form textarea:focus,
+.admin-login-card input:focus,
 .admin-panel input:focus,
 .admin-panel select:focus,
 .admin-update select:focus,
@@ -1240,6 +1267,13 @@ h3 {
     gap: 12px 18px;
   }
 
+  .admin-nav-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
   .nav-cta {
     width: 100%;
   }
@@ -1303,6 +1337,7 @@ h3 {
   }
 
   .quote-shell,
+  .admin-login,
   .admin-layout {
     padding-inline: 20px;
   }
