@@ -1,0 +1,2 @@
+import { NextResponse } from "next/server"; import { timingSafeEqual } from "node:crypto"; import { createSession } from "@/lib/auth";
+export async function POST(req:Request){const {password}=await req.json();const expected=process.env.ADMIN_PASSWORD??"";const actual=String(password??"");if(!expected||actual.length!==expected.length||!timingSafeEqual(Buffer.from(actual),Buffer.from(expected)))return NextResponse.json({error:"Invalid password"},{status:401});await createSession();return NextResponse.json({ok:true})}
